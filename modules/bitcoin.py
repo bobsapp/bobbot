@@ -16,6 +16,10 @@ r_anchor = re.compile(r'(?ims)(<a.*?</a>)')
 r_expanded = re.compile(r'(?ims)data-expanded-url=["\'](.*?)["\']')
 r_whiteline = re.compile(r'(?ims)[ \t]+[\r\n]+')
 r_breaks = re.compile(r'(?ims)[\r\n]+')
+r_btc_exchange = re.compile(r'(?ims)(mtGox)')
+r_ltc_exchange = re.compile(r'(?ims)(mtGox) (.+)')
+r_btc_currency = re.compile(r'(?ims)(USD|GBP|EUR)')
+r_ltc_currency = re.compile(r'(?ims)(USD|GBP|EUR)')
 
 def entity(*args, **kargs):
    return web.entity(*args, **kargs).encode('utf-8')
@@ -65,26 +69,36 @@ def id_tweet(tid):
       return format(tweet, username)
    return "Sorry, couldn't get a tweet from %s" % link
 
-def bitcoin(phenny, input):
+def buttcoin(phenny, input):
    arg = input.group(2)
    if not arg:
-      return phenny.reply("Give me a basis pair, a exchange, or a wallet id")
+      return phenny.reply("Give me an exchange or currency")
 
-   arg = arg.strip()
-   if isinstance(arg, unicode):
-      arg = arg.encode('utf-8')
+   if r_btc_exchange.match(arg):
+      command = arg
+      phenny.reply("Supported Exchanges: MtGox BTC-e")
+   else if r_btc_currency.match(arg):
+      command = arg
+      phenny.reply("Supported Currencies: GBP, EUR, USD")
+   else:
+      return phenny.reply("Give me an exchange or currency")
 
-   if arg.isdigit():
-      phenny.say(id_tweet(arg))
-   elif r_username.match(arg):
-      phenny.say(user_tweet(arg))
-   elif r_link.match(arg):
-      username = arg.split('/')[3]
-      tweet = read_tweet(arg)
-      phenny.say(format(tweet, username))
-   else: phenny.reply("Give me a link, a username, or a tweet id")
 
-bitcoin.commands = ['btc', 'bitcoin']
+def litecoin(phenny, input):
+   arg = input.group(2)
+   if not arg:
+      return phenny.reply("Give me an exchange or currency")
+
+   if r_ltc_exchange.match(arg):
+      command = arg
+      phenny.reply("Supported Exchanges: MtGox BTC-e")
+   else if r_ltc_currency.match(arg):
+      command = arg
+      phenny.reply("Supported Currencies: GBP, EUR, USD")
+   else:
+      return phenny.reply("Give me an exchange or currency")
+
+bitcoin.commands = ['btc', 'buttcoin', 'litecoin']
 bitcoin.thread = True
 
 if __name__ == '__main__':
