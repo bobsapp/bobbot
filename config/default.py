@@ -1,7 +1,7 @@
 nick = 'bobbot'
 host = 'irc.rizon.net'
 channels = ['#perwl', ]
-owner = 'yournickname'
+owner = 'bobsapp'
 
 # password is the NickServ password, serverpass is the server password
 # password = 'example'
