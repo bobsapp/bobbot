@@ -76,10 +76,10 @@ def buttcoin(phenny, input):
 
    if r_btc_exchange.match(arg):
       command = arg
-      phenny.reply("Supported Exchanges: MtGox BTC-e")
+      return phenny.reply("Supported Exchanges: MtGox BTC-e")
    else if r_btc_currency.match(arg):
       command = arg
-      phenny.reply("Supported Currencies: GBP, EUR, USD")
+      return phenny.reply("Supported Currencies: GBP, EUR, USD")
    else:
       return phenny.reply("Give me an exchange or currency")
 
@@ -91,10 +91,10 @@ def litecoin(phenny, input):
 
    if r_ltc_exchange.match(arg):
       command = arg
-      phenny.reply("Supported Exchanges: MtGox BTC-e")
+      return phenny.reply("Supported Exchanges: MtGox BTC-e")
    else if r_ltc_currency.match(arg):
       command = arg
-      phenny.reply("Supported Currencies: GBP, EUR, USD")
+      return phenny.reply("Supported Currencies: GBP, EUR, USD")
    else:
       return phenny.reply("Give me an exchange or currency")
 
